@@ -23,6 +23,9 @@ License:
 
 Tool # 1 - zope2_fetch_objs.py
 
+Note: This code has been tested under the following Zope 2 releases: 2.6.1, 2.7.0, and 2.8.1.
+
+
 Zope External methods to extract Python Scripts and DTML Methods from your Zope 2 Data.fs over to your filesystem
 
 - Copy zope2_fetch_objs.py into Extensions folder
@@ -41,6 +44,9 @@ Limitations:
 
 Tool #2 - zope2_propertysheet_to_sql.py
 
+Note: This code has been tested under the following Zope 2 releases: 2.6.1, 2.7.0, and 2.8.1.
+
+
  A Zope PythonScript that takes all property sheets for a ZClass instance and outputs the SQL schema for a singular table representing all the properties as well as
  an SQL insert representing that object's particular property values.
 
@@ -58,3 +64,5 @@ Tool #2 - zope2_propertysheet_to_sql.py
  3. As of now, it only supports VARCHAR, INT, and FLOAT. Strings, no matter how long they are, will be stuffed into a VARCHAR(255). If it is neither a string, integer,
  or float, the script will attempt to put it into a VARCHAR(255).  I've tested this on 3 large production ZClasses with a variety of fields, and in each case it produce
  valid SQL statements to build the table and insert the data
+
+--
