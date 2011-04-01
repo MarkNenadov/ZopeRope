@@ -26,18 +26,15 @@ Tool # 1 - zope2_fetch_objs.py
 Note: This code has been tested under the following Zope 2 releases: 2.6.1, 2.7.0, and 2.8.1.
 
 
-Zope External methods to extract Python Scripts and DTML Methods from your Zope 2 Data.fs over to your filesystem
+Zope External methods to extract Python Scripts and DTML Methods from your Zope 2 Data.fs over to your filesystem. 
+They will extract everything off the root Zope instance structure, including everything within Products and within 
+ZClasses that are embedded in products (recursively).
 
 - Copy zope2_fetch_objs.py into Extensions folder
-- Create any of these external methods:
+- Create any of these external methods (*in the root folder in your Zope instance management interface*):
 	- First one (id: extract_pyscripts, module name: zope2_fetch_objs, function name: extract_pyscripts) 
 	- Second one (id: extract_dtmlmethods, module name: zope2_fetch_objs, function: extract_dtmlmethods)
-- Invoke: [ extract_pyscripts(full_path) or extract_dtmlmethods(full_path) ] from a url or from the Zope management interface
-
-Limitations:
-
-- Doesn't look in Zope Products
-
+- Invoke from a url or from the Zope management interface: extract_pyscripts(full_path) or extract_dtmlmethods(full_path)
 
 
 --
