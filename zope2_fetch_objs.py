@@ -28,6 +28,24 @@
 
 folders = []
 
+class ZopeObjectWrapper:
+	id = None
+	content = None
+
+	def __init__(self, obj):
+		if (obj.meta_type == 'DTML Method'):
+			self.id = obj.id()
+			self.content = obj.raw
+		elif (obj.meta_type == 'Script (Python)'):
+			self.id = obj.id
+			self.content = obj.document_src()
+
+	def get_id(self):
+		return self.id
+
+	def get_content(self):
+		return self.content
+
 def load_folders(container, first_run=0):
 	global folders
 
@@ -44,29 +62,20 @@ def load_folders(container, first_run=0):
 	return folders
 
 def extract(obj, ext, path):
-	if ext == 'dtml':
-		file_name = obj.id()
-	elif ext == 'py':
-		file_name = obj.id
+	file_name = obj.get_id()
 
 	if (file_name.find("." + ext) == -1):
 		file_name += "." + ext
 	
 	f = open(path + file_name, 'w')
-
-	if ext == 'dtml':
-		src = obj.raw
-	elif ext == 'py':
-		src = obj.document_src()
-
-	f.write(src)
+	f.write(obj.get_content())
 	f.close()
 
 def extract_generic(self, obj_type, ext, path):
 	folders = load_folders(self, first_run=1)
 	for folder in folders:
 		for obj in folder.objectValues(obj_type):
-			extract(obj, ext, path)
+			extract(ZopeObjectWrapper(obj), ext, path)
 
 def extract_pyscripts(self, path):
 	extract_generic(self, "Script (Python)", 'py', path)
