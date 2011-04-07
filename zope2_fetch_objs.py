@@ -1,13 +1,19 @@
 # zope2_fetch_objs.py - Zope External methods to extract Python Scripts and DTML Methods 
-# from your Zope 2 Data.fs over to your filesystem. They will extract everything off the 
-# root Zope instance structure, including everything within Products and within ZClasses 
+# from your Zope 2 Data.fs. They will extract the relevant objects off the root Zope 
+# instance structure, including everything within Products and within ZClasses 
 # that are embedded in products.
 #
 # - copy zope2_fetch_objs.py into Extensions folder
-# - Create any of these external methods *in the root folder in your Zope instance management interface*:
-#	- First one (id: extract_pyscripts, module name: zope2_fetch_objs, function name: extract_pyscripts) 
-#	- Second one (id: extract_dtmlmethods, module name: zope2_fetch_objs, function: extract_dtmlmethods)
-# - Invoke from a url or from the Zope management interface: [ extract_pyscripts(full_path) or extract_dtmlmethods(full_path) ] 
+# - Create any of these external methods *in the root folder in your Zope instance 
+#   management interface*:
+#	- First one (id: extract_pyscripts, module name: zope2_fetch_objs, function name: 
+#         extract_pyscripts) 
+#	- Second one (id: extract_dtmlmethods, module name: zope2_fetch_objs, function: 
+#	  extract_dtmlmethods)
+#	- Third one (id: extract_tinytables, module name: zope2_fetch_objs, function: 
+#	  extract_dtmlmethods)
+# - Invoke from a url or from the Zope management interface: [ extract_pyscripts(full_path) 
+#   or extract_dtmlmethods(full_path) ] 
 #
 #  by Mark J. Nenadov 2011
 #
@@ -33,12 +39,26 @@ class ZopeObjectWrapper:
 	content = None
 
 	def __init__(self, obj):
-		if (obj.meta_type == 'DTML Method'):
+		""" Constructor, handle getting object id and content,
+		based on meta_type
+		"""
+
+		if (obj.meta_type == "DTML Method"):
 			self.id = obj.id()
 			self.content = obj.raw
-		elif (obj.meta_type == 'Script (Python)'):
+		elif (obj.meta_type == "Script (Python)"):
 			self.id = obj.id
 			self.content = obj.document_src()
+		elif (obj.meta_type == "TinyTable"):
+			self.id = obj.id
+
+			"""I don't use a CSV module here because
+			there isn't a built-in one until Python 2.3"""
+
+			s = obj.cols_text().replace(' ', ',').replace('"', '') + "\n"
+			for line in obj.data_text():
+				s += line
+			self.content = s
 
 	def get_id(self):
 		return self.id
@@ -47,6 +67,8 @@ class ZopeObjectWrapper:
 		return self.content
 
 def load_folders(container, first_run=0):
+	""" Recursively build a list of folders in the Zope instance 
+	"""
 	global folders
 
 	if first_run:
@@ -62,6 +84,9 @@ def load_folders(container, first_run=0):
 	return folders
 
 def load_products_or_zclasses(container, first_run=0, ):
+	""" Recursively build a list of Products and ZClasses in the
+	Products Management section
+	"""
 	global products_or_zclasses
 
 	if first_run:
@@ -78,6 +103,8 @@ def load_products_or_zclasses(container, first_run=0, ):
 	return products_or_zclasses
 
 def extract(obj, ext, path):
+	""" Extract a ZopeObjectWrapper and write it to the file system
+	"""
 	file_name = obj.get_id()
 
 	if file_name != None:
@@ -89,9 +116,13 @@ def extract(obj, ext, path):
 	f.close()
 
 def extract_generic(self, obj_type, ext, path):
+	""" Generically handle loading lists of folders and products/zclasses
+	filter by meta_type and pass a ZopeObjectWrapper instance to the
+	extraction function
+	"""
 	# iterate recursively to get folders
 	folders = load_folders(self, first_run=1)
-	
+
 	# iterate recursively get products 
 	products_or_zclasses = load_products_or_zclasses(self.Control_Panel.Products, first_run=1)
 
@@ -102,10 +133,20 @@ def extract_generic(self, obj_type, ext, path):
 			if obj.meta_type == obj_type:
 				extract(ZopeObjectWrapper(obj), ext, path)
 
-
 def extract_pyscripts(self, path):
+	""" Initiate extraction of Python Scripts to the file system
+	"""
+
 	extract_generic(self, "Script (Python)", 'py', path)
 
 def extract_dtmlmethods(self, path):
+	""" Initiate extraction of DTML Methods to the file system
+	"""
+
 	extract_generic(self, "DTML Method", 'dtml', path)
 
+def extract_tinytables(self, path):
+	""" Initiate extraction of TinyTables to the file system (in csv format)
+	"""
+
+	extract_generic(self, "TinyTable", "csv", path)

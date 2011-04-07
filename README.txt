@@ -31,6 +31,7 @@ within Products and within ZClasses that are embedded in products (recursively).
 - Create any of these external methods (*in the root folder in your Zope instance management interface*):
 	- First one (id: extract_pyscripts, module name: zope2_fetch_objs, function name: extract_pyscripts) 
 	- Second one (id: extract_dtmlmethods, module name: zope2_fetch_objs, function: extract_dtmlmethods)
+	- Third one (id: extract_tinytables, module name: zope2_fetch_objs, function: extract_dtmlmethods)
 - Invoke from a url or from the Zope management interface: extract_pyscripts(full_path) or 
   extract_dtmlmethods(full_path)
 
