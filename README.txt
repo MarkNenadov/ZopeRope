@@ -65,3 +65,18 @@ particular property values.
     and in each case it produce valid SQL statements to build the table and insert the data
 
 --
+
+Tool #3 - zope2_gather_info.py
+
+
+A Zope External method for the purposes of gather information about a Zope 2 instance that will be helpful 
+in assessing what migration away from it will look like. It returns a dictionary
+
+- Make sure zoperope_support_lib.py is copied somewhere in the Zope instances Python include path (one
+option is bin/lib/ within the Zope instance
+- Copy zope2_gather_info.py into Extensions folder
+ - Create an external method *in the root folder in your Zope 
+   instance management interface*:
+	- (id: get_instance_info, module name: zope2_gather_info, 
+	  function name: get_instance_info) 
+ - Invoke it zope2_gather_info()

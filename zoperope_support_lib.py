@@ -23,11 +23,15 @@ class ZopeObjectWrapper:
     """
     o_id = None
     o_content = None
+    o_meta_type = None
 
     def __init__(self, obj):
         """ Constructor, handle getting object id and content,
         based on meta_type
-		"""
+        """
+        
+        self.o_meta_type = obj.meta_type
+
         if (obj.meta_type == "DTML Method"):
             self.o_id = obj.id()
             self.o_content = obj.raw
@@ -36,24 +40,30 @@ class ZopeObjectWrapper:
             self.o_content = obj.document_src()
         elif (obj.meta_type == "TinyTable"):
             self.o_id = obj.id
+            self.o_content = obj.cols_text()
                
 	    # not using csv module, because Python < 2.3 doesn't include one 
 
-            tmp_str = obj.cols_text().replace(' ', ',').replace('"', '') + "\n"
+            tmp_str = self.o_content.replace(' ', ',').replace('"', '') + "\n"
                 
             for line in obj.data_text():
                 tmp_str += line
             self.content = tmp_str
 
-        def get_id(self):
-            """ Get id 
-            """
-            return self.o_id
+    def get_id(self):
+        """ Get id 
+        """
+        return self.o_id
 
-        def get_content(self):
-            """ Get content
-            """
-            return self.o_content
+    def get_content(self):
+        """ Get content
+        """
+        return self.o_content
+        
+    def get_meta_type(self):
+        """ Get meta type
+        """
+        return self.o_meta_type
 
 def load_folders(container, folders):
     """ Recursively build a list of folders in the Zope instance 
