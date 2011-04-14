@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module zope2_fetch_objs</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>zope2_fetch_objs</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///F:/development/portablegit/zoperope/zope2_fetch_objs.py">f:\development\portablegit\zoperope\zope2_fetch_objs.py</a></font></td></tr></table>
+    <p><tt>zope2_fetch_objs.py&nbsp;<br>
+&nbsp;<br>
+Zope&nbsp;External&nbsp;methods&nbsp;to&nbsp;extract&nbsp;Python&nbsp;Scripts&nbsp;and&nbsp;DTML&nbsp;Methods&nbsp;<br>
+from&nbsp;your&nbsp;Zope&nbsp;2&nbsp;Data.fs.&nbsp;They&nbsp;will&nbsp;extract&nbsp;the&nbsp;relevant&nbsp;objects&nbsp;off&nbsp;<br>
+the&nbsp;root&nbsp;Zope&nbsp;instance&nbsp;structure,&nbsp;including&nbsp;everything&nbsp;within&nbsp;Products&nbsp;<br>
+and&nbsp;within&nbsp;ZClasses&nbsp;that&nbsp;are&nbsp;embedded&nbsp;in&nbsp;products.<br>
+&nbsp;<br>
+Steps:<br>
+&nbsp;-&nbsp;Copy&nbsp;zoperope_support&nbsp;lib&nbsp;into&nbsp;somewhere&nbsp;in&nbsp;your&nbsp;Zope&nbsp;instances&nbsp;Python&nbsp;<br>
+&nbsp;&nbsp;&nbsp;module&nbsp;include&nbsp;path&nbsp;(ie.&nbsp;bin/lib/&nbsp;within&nbsp;your&nbsp;Zope&nbsp;instance&nbsp;folder)<br>
+&nbsp;-&nbsp;Copy&nbsp;zope2_fetch_objs.py&nbsp;into&nbsp;Extensions&nbsp;folder<br>
+&nbsp;-&nbsp;Create&nbsp;any&nbsp;of&nbsp;these&nbsp;external&nbsp;methods&nbsp;*in&nbsp;the&nbsp;root&nbsp;folder&nbsp;in&nbsp;your&nbsp;Zope&nbsp;<br>
+&nbsp;&nbsp;&nbsp;instance&nbsp;management&nbsp;interface*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;First&nbsp;one&nbsp;(id:&nbsp;extract_pyscripts,&nbsp;module&nbsp;name:&nbsp;zope2_fetch_objs,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;name:&nbsp;extract_pyscripts)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Second&nbsp;one&nbsp;(id:&nbsp;extract_dtmlmethods,&nbsp;module&nbsp;name:&nbsp;zope2_fetch_objs,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function:&nbsp;extract_dtmlmethods)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Third&nbsp;one&nbsp;(id:&nbsp;extract_tinytables,&nbsp;module&nbsp;name:&nbsp;zope2_fetch_objs,&nbsp;function:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extract_dtmlmethods)<br>
+&nbsp;-&nbsp;Invoke&nbsp;from&nbsp;a&nbsp;url&nbsp;or&nbsp;from&nbsp;the&nbsp;Zope&nbsp;management&nbsp;interface:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a href="#-extract_pyscripts">extract_pyscripts</a>(full_path)&nbsp;or&nbsp;<a href="#-extract_dtmlmethods">extract_dtmlmethods</a>(full_path)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;<a href="#-extract_tinytables">extract_tinytables</a>(full_path)&nbsp;]<br>
+&nbsp;<br>
+(Tested&nbsp;with&nbsp;pylint&nbsp;(10/10&nbsp;score&nbsp;with&nbsp;default&nbsp;config))<br>
+&nbsp;<br>
+by&nbsp;Mark&nbsp;J.&nbsp;Nenadov&nbsp;2011<br>
+&nbsp;<br>
+License:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;program&nbsp;is&nbsp;free&nbsp;software:&nbsp;you&nbsp;can&nbsp;redistribute&nbsp;it&nbsp;and/or&nbsp;modify<br>
+&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;under&nbsp;the&nbsp;terms&nbsp;of&nbsp;the&nbsp;GNU&nbsp;Lesser&nbsp;General&nbsp;Public&nbsp;License&nbsp;as&nbsp;published&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;Free&nbsp;Software&nbsp;Foundation,&nbsp;either&nbsp;version&nbsp;3&nbsp;of&nbsp;the&nbsp;License,&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(at&nbsp;your&nbsp;option)&nbsp;any&nbsp;later&nbsp;version.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;program&nbsp;is&nbsp;distributed&nbsp;in&nbsp;the&nbsp;hope&nbsp;that&nbsp;it&nbsp;will&nbsp;be&nbsp;useful,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;WITHOUT&nbsp;ANY&nbsp;WARRANTY;&nbsp;without&nbsp;even&nbsp;the&nbsp;implied&nbsp;warranty&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;MERCHANTABILITY&nbsp;or&nbsp;FITNESS&nbsp;FOR&nbsp;A&nbsp;PARTICULAR&nbsp;PURPOSE.&nbsp;&nbsp;See&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GNU&nbsp;General&nbsp;Public&nbsp;License&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;should&nbsp;have&nbsp;received&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;GNU&nbsp;General&nbsp;Public&nbsp;License<br>
+&nbsp;&nbsp;&nbsp;&nbsp;along&nbsp;with&nbsp;this&nbsp;program.&nbsp;&nbsp;If&nbsp;not,&nbsp;see&nbsp;&lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-extract"><strong>extract</strong></a>(obj, ext, path)</dt><dd><tt>Extract&nbsp;a&nbsp;ZopeObjectWrapper&nbsp;and&nbsp;write&nbsp;it&nbsp;to&nbsp;the&nbsp;file&nbsp;system</tt></dd></dl>
+ <dl><dt><a name="-extract_dtmlmethods"><strong>extract_dtmlmethods</strong></a>(self, path)</dt><dd><tt>Initiate&nbsp;extraction&nbsp;of&nbsp;DTML&nbsp;Methods&nbsp;to&nbsp;the&nbsp;file&nbsp;system</tt></dd></dl>
+ <dl><dt><a name="-extract_generic"><strong>extract_generic</strong></a>(self, obj_type, ext, path)</dt><dd><tt>Generically&nbsp;handle&nbsp;loading&nbsp;lists&nbsp;of&nbsp;folders&nbsp;and&nbsp;products/zclasses<br>
+filter&nbsp;by&nbsp;meta_type&nbsp;and&nbsp;pass&nbsp;a&nbsp;ZopeObjectWrapper&nbsp;instance&nbsp;to&nbsp;the<br>
+extraction&nbsp;function</tt></dd></dl>
+ <dl><dt><a name="-extract_pyscripts"><strong>extract_pyscripts</strong></a>(self, path)</dt><dd><tt>Initiate&nbsp;extraction&nbsp;of&nbsp;Python&nbsp;Scripts&nbsp;to&nbsp;the&nbsp;file&nbsp;system</tt></dd></dl>
+ <dl><dt><a name="-extract_tinytables"><strong>extract_tinytables</strong></a>(self, path)</dt><dd><tt>Initiate&nbsp;extraction&nbsp;of&nbsp;TinyTables&nbsp;to&nbsp;the&nbsp;file&nbsp;system&nbsp;(in&nbsp;csv&nbsp;format)</tt></dd></dl>
+</td></tr></table>
+</body></html>
