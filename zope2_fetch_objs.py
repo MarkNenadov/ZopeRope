@@ -45,6 +45,7 @@ License:
 from zoperope_support_lib import ZopeObjectWrapper
 from zoperope_support_lib import load_folders
 from zoperope_support_lib import load_products_or_zclasses
+from zoperope_support_lib import get_root_folder
 
 def extract(obj, ext, path):
     """ Extract a ZopeObjectWrapper and write it to the file system
@@ -64,7 +65,7 @@ def extract_generic(self, obj_type, ext, path):
     filter by meta_type and pass a ZopeObjectWrapper instance to the
     extraction function
     """
-    cp_products = self.Control_Panel.Products
+    cp_products = get_root_folder().Control_Panel.Products
 
     # iterate recursively to get folders
     folders = load_folders(self, [])
@@ -85,7 +86,7 @@ def extract_pyscripts(self, path):
     """ Initiate extraction of Python Scripts to the file system
     """
 
-    extract_generic(self, "Script (Python)", 'py', path)
+    extract_generic(get_root_folder(), "Script (Python)", 'py', path)
 
 def extract_dtmlmethods(self, path):
     """ Initiate extraction of DTML Methods to the file system
@@ -97,4 +98,4 @@ def extract_tinytables(self, path):
     """ Initiate extraction of TinyTables to the file system (in csv format)
     """
 	
-    extract_generic(self, "TinyTable", "csv", path)
+    extract_generic(get_root_folder(), "TinyTable", "csv", path)

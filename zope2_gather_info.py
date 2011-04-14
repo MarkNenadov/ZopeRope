@@ -41,6 +41,7 @@ Steps:
 from zoperope_support_lib import load_folders
 from zoperope_support_lib import load_products_or_zclasses
 from zoperope_support_lib import ZopeObjectWrapper
+from zoperope_support_lib import get_root_folder
 
 def get_instance_info(self):
     """ Generate a dictionary about various details from a Zope instance
@@ -58,9 +59,9 @@ def get_instance_info(self):
     instance_info['TinyTable']['num'] = 0
     instance_info['TinyTable']['lines'] = 0
 
-    cp_products = self.Control_Panel.Products
+    cp_products = get_root_folder().Control_Panel.Products
 
-    folders = load_folders(self, [])
+    folders = load_folders(get_root_folder(), [])
     products_or_zclasses = load_products_or_zclasses(cp_products, [])
 
     for meta_type in instance_info.keys():

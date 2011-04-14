@@ -94,3 +94,6 @@ def load_products_or_zclasses(container, products_or_zclasses):
             load_products_or_zclasses(product_or_zclass, products_or_zclasses)
 
     return products_or_zclasses
+
+def get_root_folder(request):
+    return request.PARENTS[-1]
